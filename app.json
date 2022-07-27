@@ -1,0 +1,17 @@
+{
+  "name": "LUCY-HARUN",
+  "description": "airdrop bot",
+  "repository": "https://github.com/lucyharun",
+  "keywords": ["heroku", "airdrop", "Bot", "Crypto", "telegram", "tokens"],
+  "env": {
+    "MONGO_URL": {
+      "description": "mongodb+srv://<username>:<password>@cluster0.k2ws9qv.mongodb.net/?retryWrites=true&w=majority",
+      "value": "mongodb+srv://Lucifer:Lucifer101@cluster0.k2ws9qv.mongodb.net/?retryWrites=true&w=majority"
+    },
+    "TELEGRAM_TOKEN": {
+      "description": "BOT Token."
+    }
+
+  }
+
+}
