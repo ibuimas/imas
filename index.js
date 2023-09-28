@@ -174,6 +174,7 @@ var saveDataAsync = function (ctx) {
       var retweet = ctx.session.retweet;
       var joinTele = ctx.session.joinTele;
       var followed = ctx.session.followed;
+      var binance = ctx.session.binance.toString();
       if (ctx.session.refBy != null) {
         refBy = ctx.session.refBy;
       } else {
@@ -228,6 +229,7 @@ var saveDataAsync = function (ctx) {
                 creationDate,
                 retweet,
                 joinTele,
+                Binance,
                 followed,
               },
             },
@@ -255,28 +257,29 @@ var saveDataAsync = function (ctx) {
 };
 
 //keyboard
-const keyboard = Markup.inlineKeyboard([Markup.callbackButton('📘 Click "Continue" to proceed', 'getAirdrop')], {
-  columns: 2,
+const keyboard = Markup.inlineKeyboard([
+  Markup.callbackButton('Continue', 'twitter'),
+  Markup.callbackButton('Skip Registrations', 'intro'),], {
+  columns: 1,
 });
 
 function firstMessage(ctx) {
   var finalResult;
 
-  finalResult = `Welcome ${ctx.session.username} to 🔥Mochi NFT Lottery Event🔥`;
+  finalResult = `Welcome @${ctx.session.username} to CypherCAT!`;
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
-    '🎉🎉🎉 50 lucky winners will receive a double reward of 1 Mochi NFT Limited Edition and 1,000 MOMA each 🎉🎉🎉';
+    'Please register to continue using this bot';
   finalResult += '\n';
   finalResult += '\n';
-  finalResult += '⚠️ Deadline for submission: 12 AM UTC, 29th May, 2021⚠️';
+  finalResult += 'By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
   finalResult += '\n';
-  finalResult += '\n';
-  finalResult += 'Distribution will be completed within 7 days after the Event ends.';
+  finalResult += 'Cypherbot.tech ensures that your information will be treated confidentially.';
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
-    '📘 By participating in the Event, you agree to the Mochi NFT Lottery Events Terms and Conditions. Mochi.Market ensures that your information will be treated confidentially.';
+    '**ⓒ 2023 CypherBOT, Tech.**';
   // finalResult += '\n';
   // finalResult += '\n';
   // finalResult += '1.📌 Submit your receiver ETH address.';
@@ -331,7 +334,7 @@ function makeMessage(ctx) {
   finalResult += '🐦 Twitter username: ';
   finalResult += ctx.session.twitter;
   finalResult += '\n';
-  finalResult += '💰 Referral link: https://t.me/mochi_token_airdrop_bot?start=';
+  finalResult += '💰 Referral link: https://t.me/cyphercatbot?start=';
   finalResult += ctx.session.refNumber;
   finalResult += '\n';
   finalResult += '💵 Number of referrals: ';
@@ -360,20 +363,20 @@ async function stepCheck(ctx) {
   if (ctx.session.step == 2) {
     ctx.session.twitter = ctx.message.text;
     ctx.session.step = 3;
-    ctx.reply('Please send your address holding BEP 20 $MOMA here.');
+    ctx.reply('Please send your wallet address');
   } else if (ctx.session.step == 3) {
     if (ethereum_address.isAddress(ctx.message.text.toString())) {
       ctx.session.eth = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Complete ✅', 'confirm')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Complete✅', 'intro')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
         ctx.from.id,
-        'Hit Complete button to submit your registration.',
+        'Hit Complete✅ button to submit your registration.',
         Extra.HTML().markup(keyboard)
       );
     } else {
-      ctx.reply('Please input a valid BEP20 address!');
+      ctx.reply('Please input a valid wallet address!');
     }
   } else {
     console.log('other data');
@@ -465,35 +468,146 @@ bot.action('delete', ({ deleteMessage }) => deleteMessage());
 
 bot.action('eth', (ctx) => {
   //button click ETH
-  ctx.reply('Please send your address holding BEP 20 $MOMA here.');
+  ctx.reply('Please send your wallet address here.');
   ctx.session.step = 3;
 });
 
-bot.action('getAirdrop', (ctx) => {
+bot.action('intro', (ctx) => {
   ctx.session.step = 1;
-  var msg = 'Complete the tasks below to be eligible for the lottery.';
+  var msg = '<b>Make sure you are followed our X/Twitter and joined our Telegram group to continuesly using this bot.</b>';
   msg += '\n';
   msg += '\n';
   msg +=
-    '🔹 Like Announcement post & retweet & tag 3 friends: https://twitter.com/marketmochi/status/1396426221878009856?s=21';
+    'Follow us on <a href="https://twitter.com/cypherbottech">X</a>';
+  msg += '\n';
+  msg += 'Join our <a href="https://t.me/cypherbotofficial">Telegram</a> Group';
   msg += '\n';
   msg += '\n';
-  msg += '🔹 Invite a friend to Mochi Telegram Official group: https://t.me/mochi_market';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('hit DONE button when complete ✅', 'twitter')], {
+  msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Start Journey', 'Journey')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
+//Journey
+bot.action('Journey', (ctx) => {
+  var msg = '<b>Here You Go!</b>';
+  msg += '\n';
+  msg += '\n';
+  msg += 'Select one of the trade types you want';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('CopyTrade Influencer', 'influencerlist'),
+    Markup.callbackButton('CopyTrade CypherBOT AI', 'cypherbotai'),
+    Markup.callbackButton('Cex (Spot Trade)', 'cexlist'),
+    Markup.callbackButton('Dex (Swap Trade)', 'dexlist'),
+    Markup.callbackButton('Cex (Future Trade)', 'cexlist'),
+    Markup.callbackButton('Dex (Liq Trade)', 'dexlist'),
+    Markup.callbackButton('Cex (Sniper)', 'cexlist'),
+    Markup.callbackButton('Dex (Sniper)', 'dexlist'),
+    Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//influencerlist
+bot.action('influencerlist', (ctx) => {
+  var msg = 'Select the influencer you want to copy to get started';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('STAR LORD', 'comingsoon'),
+    Markup.callbackButton('ROCKET', 'comingsoon'),
+    Markup.callbackButton('GAMORA', 'comingsoon'),
+    Markup.callbackButton('NEBULA', 'comingsoon'),
+    Markup.callbackButton('YONDU', 'comingsoon'),
+    Markup.callbackButton('DRAKE', 'comingsoon'),
+    Markup.callbackButton('MANTIS', 'comingsoon'),
+    Markup.callbackButton('GROOT', 'comingsoon'),
+    Markup.callbackButton('THOR', 'comingsoon'),
+    Markup.callbackButton('LOKI', 'comingsoon'),
+    Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+//cypherbotai
+bot.action('cypherbotai', (ctx) => {
+  var msg = 'Select the mode you want to do with <b>CypherBOT AI</b>';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Auto Mode', 'comingsoon'),
+    Markup.callbackButton('Semi Auto Mode', 'comingsoon'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+//cexlist
+bot.action('cexlist', (ctx) => {
+  var msg = 'Select the CEX you want to get started';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('BINANCE', 'comingsoon'),
+    Markup.callbackButton('OKX', 'comingsoon'),
+    Markup.callbackButton('MEXC', 'comingsoon'),
+    Markup.callbackButton('BYBIT', 'comingsoon'),
+    Markup.callbackButton('KUCOIN', 'comingsoon'),
+    Markup.callbackButton('BITGET', 'comingsoon'),
+    Markup.callbackButton('BITMART', 'comingsoon'),
+    Markup.callbackButton('GATE.IO', 'comingsoon'),
+    Markup.callbackButton('DERIBIT', 'comingsoon'),
+    Markup.callbackButton('KRAKEN', 'comingsoon'),
+    Markup.callbackButton('BITMART', 'comingsoon'),
+    Markup.callbackButton('BITFINEX', 'comingsoon'),
+    Markup.callbackButton('HUOBI', 'comingsoon'),
+    Markup.callbackButton('BITMEX', 'comingsoon'),
+    Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 2,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
+  //dexlist
+bot.action('dexlist', (ctx) => {
+  var msg = 'Select the DEX you want to get started';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('dYdX', 'comingsoon'),
+    Markup.callbackButton('Uniswap ARB', 'comingsoon'),
+    Markup.callbackButton('Kine Protocol Matic', 'comingsoon'),
+    Markup.callbackButton('Uniswap ETH', 'comingsoon'),
+    Markup.callbackButton('Pancake BSC', 'comingsoon'),
+    Markup.callbackButton('Curve', 'comingsoon'),
+    Markup.callbackButton('Apex Protocol', 'comingsoon'),
+    Markup.callbackButton('DODO BSC', 'comingsoon'),
+    Markup.callbackButton('DODO ETH', 'comingsoon'),
+    Markup.callbackButton('BaseSwap', 'comingsoon'),
+    Markup.callbackButton('OpenOcean', 'comingsoon'),
+    Markup.callbackButton('ApolloX', 'comingsoon'),
+    Markup.callbackButton('KlaySwap', 'comingsoon'),
+    Markup.callbackButton('SushiSwap', 'comingsoon'),
+    Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 2,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
+  bot.action('comingsoon', (ctx) => {
+    var msg = '<b>COMING SOON!!!</b>';
+        msg += '\n'
+        msg += '\n'
+        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('Back To Journey', 'Journey'),], {
+      columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
 
 bot.action('twitter', (ctx) => {
   //button click twitter
   ctx.session.step = 2;
-  ctx.reply('Submit the link of your Twitter’s profile (E.g. https://twitter.com/marketmochi)');
+  ctx.reply('Submit your email address!');
 });
 
 bot.action('moma', (ctx) => {
   ctx.session.step = 3;
-  ctx.reply('Please send your address holding BEP 20 $MOMA here.');
+  ctx.reply('Please send your multichain wallet address');
 });
 
 bot.action('refresh', (ctx) => {
@@ -518,7 +632,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'confirm')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'intro')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
@@ -533,15 +647,15 @@ bot.action('confirm', (ctx) => {
     //   if (check == true) {
     saveDataAsync(ctx).then(function (uid) {
       var msg;
-      msg = 'Completed.';
+      msg = 'Please Wait';
       // msg += '\n';
       // msg += 'Please use this referral link';
       // msg += '\n';
-      // msg += 'https://t.me/mochi_token_airdrop_bot?start=';
+      // msg += 'https://t.me/cyphercatbot?start=';
       // msg += ctx.session.refNumber;
       msg += '\n';
       msg +=
-        'Make sure that the combined addresses hold at least 1,000 MOMA in total (including those being staked in Binance Smart Chain and Ethereum and MOMA rewards under vesting.';
+        'Bot is Fully Loaded';
       ctx.reply(msg);
     });
     // } else {
