@@ -266,7 +266,7 @@ const keyboard = Markup.inlineKeyboard([
 function firstMessage(ctx) {
   var finalResult;
 
-  finalResult = `Welcome @${ctx.session.username} to CypherCAT!`;
+  finalResult = `Welcome @${ctx.session.username} to CypherFUND!`;
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
@@ -334,7 +334,7 @@ function makeMessage(ctx) {
   finalResult += '🐦 Twitter username: ';
   finalResult += ctx.session.twitter;
   finalResult += '\n';
-  finalResult += '💰 Referral link: https://t.me/cyphercatbot?start=';
+  finalResult += '💰 Referral link: https://t.me/cypherfundbot?start=';
   finalResult += ctx.session.refNumber;
   finalResult += '\n';
   finalResult += '💵 Number of referrals: ';
