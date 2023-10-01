@@ -484,7 +484,7 @@ bot.action('intro', (ctx) => {
   msg += '\n';
   msg += '\n';
   msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Start Journey', 'Journey')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Start Journey', 'comingsoon')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -632,7 +632,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'intro')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'confirm')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
