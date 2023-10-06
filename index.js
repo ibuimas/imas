@@ -256,8 +256,8 @@ var saveDataAsync = function (ctx) {
 
 //keyboard
 const keyboard = Markup.inlineKeyboard([
-  Markup.callbackButton(‘✅Continue✅’, 'twitter'),
-  Markup.callbackButton(‘☑️Skip Registrations☑️’, 'intro'),], {
+  Markup.callbackButton('✅Continue✅', 'twitter'),
+  Markup.callbackButton('❌Skip Registrations❌', 'intro'),], {
   columns: 1,
 });
 
@@ -268,7 +268,7 @@ function firstMessage(ctx) {
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
-    ‘😊Please register to continue using this bot';
+    '😊Please register to continue using this bot';
   finalResult += '\n';
   finalResult += '\n';
   finalResult += 'By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
@@ -331,25 +331,25 @@ async function check(ctx) {
 
 function makeMessage(ctx) {
   var finalResult;
-  finalResult = ‘👤User ID: ';
+  finalResult = '👤User ID: ';
   finalResult += ctx.from.id;
   finalResult += '\n';
-  finalResult += 'Name: ';
+  finalResult += '🎫 Account Name: ';
   finalResult += ctx.session.moma;
   finalResult += '\n';
-  finalResult += ‘💲Wallet Address: ';
+  finalResult += '💲Wallet Address: ';
   finalResult += ctx.session.eth;
   finalResult += '\n';
-  finalResult += ‘📧email address: ';
+  finalResult += '📧email address: ';
   finalResult += ctx.session.twitter;
   finalResult += '\n';
-  finalResult += ‘👥Referral link: https://t.me/CypherFundbot?start=';
+  finalResult += '👥Referral link: https://t.me/CypherFundbot?start=';
   finalResult += ctx.session.refNumber;
   finalResult += '\n';
-  finalResult += ‘🔢Number of referrals: ';
+  finalResult += '🔢Number of referrals: ';
   finalResult += ctx.session.count || '0';
   finalResult += '\n';
-  finalResult += ‘🔗Referred by: ';
+  finalResult += '🔗Referred by: ';
   finalResult += ctx.session.refByName || '';
 
   return finalResult;
@@ -372,12 +372,12 @@ async function stepCheck(ctx) {
   if (ctx.session.step == 2) {
     ctx.session.twitter = ctx.message.text;
     ctx.session.step = 3;
-    ctx.reply(‘💲Please send your Wallet address');
+    ctx.reply('💲Please send your wallet address');
   }
   else if (ctx.session.step == 3) {
     if (ethereum_address.isAddress(ctx.message.text.toString())) {
       ctx.session.eth = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘✅Next✅’, 'moma')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Next✅', 'moma')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
@@ -385,11 +385,11 @@ async function stepCheck(ctx) {
         'Hit the ✅Next✅ button to process your registration.',
         Extra.HTML().markup(keyboard)
       );}else 
-        ctx.reply(‘⁉️Please input a valid wallet address!');
+        ctx.reply('⁉️Please input a valid wallet address!');
       }
     else if (ctx.session.step == 4) {
       ctx.session.moma = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘✅Register✅’, 'check')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Register✅', 'check')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
@@ -397,7 +397,7 @@ async function stepCheck(ctx) {
         'Hit ✅Register✅ button to submit your registration.',
         Extra.HTML().markup(keyboard)
       );}else {
-        var msg = ‘🔄Please wait! We are verifying your transactions.🔄’;
+        var msg = '🔄Please wait! We are verifying your transactions.🔄';
   msg += '\n';
   msg += '\n';
   msg +=
@@ -407,7 +407,7 @@ async function stepCheck(ctx) {
   msg += '\n';
   msg += '\n';
   msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘🔥Back to Journey🔥’, 'Journey')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Journey🔥', 'Journey')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -515,7 +515,7 @@ bot.action('intro', (ctx) => {
   msg += '\n';
   msg += '\n';
   msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘🔥Start Journey🔥’, 'Journey')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Start Journey🔥', 'Journey')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -974,7 +974,7 @@ bot.action('dexlist', (ctx) => {
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -988,7 +988,7 @@ bot.action('dexlist', (ctx) => {
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1002,7 +1002,7 @@ bot.action('dexlist', (ctx) => {
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1011,12 +1011,12 @@ bot.action('dexlist', (ctx) => {
 bot.action('twitter', (ctx) => {
   //button click twitter
   ctx.session.step = 2;
-  ctx.reply(‘🙏Please submit your email address!');
+  ctx.reply('🙏Please submit your email address!');
 });
 
 bot.action('moma', (ctx) => {
   ctx.session.step = 4;
-  ctx.reply(‘🤷‍♀️What should I call you? Please input your name');
+  ctx.reply(' 🤷‍♀️ What should I call you? Please input your name');
 });
 
 bot.action('refresh', (ctx) => {
@@ -1056,11 +1056,11 @@ bot.action('confirm', (ctx) => {
     //   if (check == true) {
     saveDataAsync(ctx).then(function (uid) {
       var msg;
-      var msg = '<b>✅Registrations Succed!!!✅</b>';
+      var msg = '✅<b>Registrations Succed!!!</b>✅';
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Start Journey🔥’, 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Start Journey🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
