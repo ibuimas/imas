@@ -643,16 +643,16 @@ bot.action('confirm', (ctx) => {
   checkDataAsync(ctx).then(function (uid) {
     var check = uid;
     console.log('CHECK', check);
-    // refByNameAsync(ctx).then(function (uid) {
-    //   if (check == true) {
+    refByNameAsync(ctx).then(function (uid) {
+    if (check == true) {
     saveDataAsync(ctx).then(function (uid) {
       var msg;
       msg = 'Please Wait';
-      // msg += '\n';
-      // msg += 'Please use this referral link';
-      // msg += '\n';
-      // msg += 'https://t.me/cyphercatbot?start=';
-      // msg += ctx.session.refNumber;
+      msg += '\n';
+      msg += 'Please use this referral link';
+      msg += '\n';
+      msg += 'https://t.me/cyphercatbot?start=';
+      msg += ctx.session.refNumber;
       msg += '\n';
       msg +=
         'Bot is Fully Loaded';
