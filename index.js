@@ -142,11 +142,11 @@ var findExistingAsync = function (ctx) {
           );
           // console.log('result ===========', result);
           ctx.session.eth = result.ethAddress;
-          ctx.session.twitter = result.twitterUser;
+          ctx.session.twitter = result.emailAddress;
           ctx.session.refBy = result.refBy;
           ctx.session.refNumber = result.refNumber;
           ctx.session.username = result.telegramUser;
-          ctx.session.retweet = result.retweet;
+          ctx.session.moma = result.moma;
           ctx.session.joinTele = result.joinTele;
           ctx.session.followed = result.followed;
           ctx.session.found = '1';
@@ -167,14 +167,13 @@ var saveDataAsync = function (ctx) {
       console.log('SAVING DATA');
       var creationDate = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''); //cleans up creation date
       var ethAddress = ctx.session.eth.toString();
-      var twitterUser = ctx.session.twitter.toString();
+      var emailAddress = ctx.session.twitter.toString();
       var telegramUser = ctx.session.username.toString();
       var refNumber = ctx.session.refNumber.toString();
       var refBy = '0';
-      var retweet = ctx.session.retweet;
+      var moma = ctx.session.moma.toString();
       var joinTele = ctx.session.joinTele;
       var followed = ctx.session.followed;
-      var binance = ctx.session.binance.toString();
       if (ctx.session.refBy != null) {
         refBy = ctx.session.refBy;
       } else {
@@ -187,12 +186,12 @@ var saveDataAsync = function (ctx) {
         console.log('FIND ONE');
         let myobj = new User({
           ethAddress,
-          twitterUser,
+          emailAddress,
           telegramUser,
           refNumber,
           refBy,
           creationDate,
-          retweet,
+          moma,
           joinTele,
           followed,
         });
@@ -222,14 +221,13 @@ var saveDataAsync = function (ctx) {
             {
               $set: {
                 ethAddress,
-                twitterUser,
+                emailAddress,
                 telegramUser,
                 refNumber,
                 refBy,
                 creationDate,
-                retweet,
+                moma,
                 joinTele,
-                Binance,
                 followed,
               },
             },
@@ -258,19 +256,19 @@ var saveDataAsync = function (ctx) {
 
 //keyboard
 const keyboard = Markup.inlineKeyboard([
-  Markup.callbackButton('Continue', 'twitter'),
-  Markup.callbackButton('Skip Registrations', 'intro'),], {
+  Markup.callbackButton(‘✅Continue✅’, 'twitter'),
+  Markup.callbackButton(‘☑️Skip Registrations☑️’, 'intro'),], {
   columns: 1,
 });
 
 function firstMessage(ctx) {
   var finalResult;
 
-  finalResult = `Welcome @${ctx.session.username} to CypherFUND!`;
+  finalResult = `👋Welcome @${ctx.session.username} to CypherFUND!`;
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
-    'Please register to continue using this bot';
+    ‘😊Please register to continue using this bot';
   finalResult += '\n';
   finalResult += '\n';
   finalResult += 'By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
@@ -279,7 +277,7 @@ function firstMessage(ctx) {
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
-    '**ⓒ 2023 CypherBOT, Tech.**';
+    'ⓒ 2023 CypherBOT, Tech.';
   // finalResult += '\n';
   // finalResult += '\n';
   // finalResult += '1.📌 Submit your receiver ETH address.';
@@ -297,14 +295,14 @@ function firstMessage(ctx) {
 
 async function check(ctx) {
   var finalResult;
-  finalResult = '1. Submitted Wallet address';
+  finalResult = '1. Submitted BEP20 address';
   if (ctx.session.eth) {
     finalResult += ' ✅';
   } else {
     finalResult += ' ❌';
   }
   finalResult += '\n';
-  finalResult += '2. Submitted Email address';
+  finalResult += '2. Submitted Twitter address';
   if (ctx.session.twitter) {
     finalResult += ' ✅';
   } else {
@@ -312,11 +310,19 @@ async function check(ctx) {
   }
   finalResult += '\n';
 
-  finalResult += '3. Submitted Name';
-  if (ctx.session.retweet) {
+  finalResult += '3. Complete Registration';
+  if (ctx.session.moma) {
     finalResult += ' ✅';
   } else {
-    finalResult += ' ❌';
+    finalResult += ' ✅';
+  }
+  finalResult += '\n';
+
+  finalResult += '4. Share your referral link to get more benefit!';
+  if (ctx.session.moma) {
+    finalResult += ' 🔥';
+  } else {
+    finalResult += ' 🔥';
   }
   finalResult += '\n';
 
@@ -325,22 +331,25 @@ async function check(ctx) {
 
 function makeMessage(ctx) {
   var finalResult;
-  finalResult = '👤ID: ';
+  finalResult = ‘👤User ID: ';
   finalResult += ctx.from.id;
   finalResult += '\n';
-  finalResult += '🔑 ETH Address: ';
+  finalResult += 'Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += ‘💲Wallet Address: ';
   finalResult += ctx.session.eth;
   finalResult += '\n';
-  finalResult += '🐦 Twitter username: ';
+  finalResult += ‘📧email address: ';
   finalResult += ctx.session.twitter;
   finalResult += '\n';
-  finalResult += '💰 Referral link: https://t.me/cypherfundbot?start=';
+  finalResult += ‘👥Referral link: https://t.me/CypherFundbot?start=';
   finalResult += ctx.session.refNumber;
   finalResult += '\n';
-  finalResult += '💵 Number of referrals: ';
+  finalResult += ‘🔢Number of referrals: ';
   finalResult += ctx.session.count || '0';
   finalResult += '\n';
-  finalResult += '👥 Referred by: ';
+  finalResult += ‘🔗Referred by: ';
   finalResult += ctx.session.refByName || '';
 
   return finalResult;
@@ -350,7 +359,7 @@ async function initMessage(ctx) {
   if (ctx.session.found != '1') {
     ctx.session.eth = 'nil';
     ctx.session.twitter = 'nil';
-    ctx.session.retweet = '0';
+    ctx.session.moma = 'nil';
     ctx.session.joinTele = '0';
     ctx.session.followed = '0';
   } else {
@@ -363,25 +372,47 @@ async function stepCheck(ctx) {
   if (ctx.session.step == 2) {
     ctx.session.twitter = ctx.message.text;
     ctx.session.step = 3;
-    ctx.reply('Please send your wallet address');
-  } else if (ctx.session.step == 3) {
+    ctx.reply(‘💲Please send your Wallet address');
+  }
+  else if (ctx.session.step == 3) {
     if (ethereum_address.isAddress(ctx.message.text.toString())) {
       ctx.session.eth = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Complete✅', 'intro')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘✅Next✅’, 'moma')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
         ctx.from.id,
-        'Hit Complete✅ button to submit your registration.',
+        'Hit the ✅Next✅ button to process your registration.',
         Extra.HTML().markup(keyboard)
-      );
-    } else {
-      ctx.reply('Please input a valid wallet address!');
+      );}else 
+        ctx.reply(‘⁉️Please input a valid wallet address!');
+      }
+    else if (ctx.session.step == 4) {
+      ctx.session.moma = ctx.message.text.toString();
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘✅Register✅’, 'check')], {
+        columns: 1,
+      });
+      ctx.telegram.sendMessage(
+        ctx.from.id,
+        'Hit ✅Register✅ button to submit your registration.',
+        Extra.HTML().markup(keyboard)
+      );}else {
+        var msg = ‘🔄Please wait! We are verifying your transactions.🔄’;
+  msg += '\n';
+  msg += '\n';
+  msg +=
+    'Follow us on <a href="https://twitter.com/cypherbottech">X</a>';
+  msg += '\n';
+  msg += 'Join our <a href="https://t.me/cypherbotofficial">Telegram</a> Group';
+  msg += '\n';
+  msg += '\n';
+  msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘🔥Back to Journey🔥’, 'Journey')], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+     }
     }
-  } else {
-    console.log('other data');
-  }
-}
 
 //bot init
 const bot = new Telegraf(config.telegraf_token); // Let's instantiate a bot using our token.
@@ -468,7 +499,7 @@ bot.action('delete', ({ deleteMessage }) => deleteMessage());
 
 bot.action('eth', (ctx) => {
   //button click ETH
-  ctx.reply('Please send your mulwallet address here.');
+  ctx.reply('Please send your wallet address here.');
   ctx.session.step = 3;
 });
 
@@ -484,7 +515,7 @@ bot.action('intro', (ctx) => {
   msg += '\n';
   msg += '\n';
   msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Start Journey', 'comingsoon')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton(‘🔥Start Journey🔥’, 'Journey')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -494,50 +525,400 @@ bot.action('Journey', (ctx) => {
   var msg = '<b>Here You Go!</b>';
   msg += '\n';
   msg += '\n';
-  msg += 'Select one of the trade types you want';
+  msg += 'Deposit or buy one or more <b>cBOT License</b> to your account! And get 60% shared Profit from CypherFUND AI Trade BOT';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('CopyTrade Influencer', 'influencerlist'),
-    Markup.callbackButton('CopyTrade CypherBOT AI', 'cypherbotai'),
-    Markup.callbackButton('Cex (Spot Trade)', 'cexlist'),
-    Markup.callbackButton('Dex (Swap Trade)', 'dexlist'),
-    Markup.callbackButton('Cex (Future Trade)', 'cexlist'),
-    Markup.callbackButton('Dex (Liq Trade)', 'dexlist'),
-    Markup.callbackButton('Cex (Sniper)', 'cexlist'),
-    Markup.callbackButton('Dex (Sniper)', 'dexlist'),
-    Markup.callbackButton('More', 'comingsoon'),], {
-    columns: 2,
-  });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-});
-//influencerlist
-bot.action('influencerlist', (ctx) => {
-  var msg = 'Select the influencer you want to copy to get started';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('STAR LORD', 'comingsoon'),
-    Markup.callbackButton('ROCKET', 'comingsoon'),
-    Markup.callbackButton('GAMORA', 'comingsoon'),
-    Markup.callbackButton('NEBULA', 'comingsoon'),
-    Markup.callbackButton('YONDU', 'comingsoon'),
-    Markup.callbackButton('DRAKE', 'comingsoon'),
-    Markup.callbackButton('MANTIS', 'comingsoon'),
-    Markup.callbackButton('GROOT', 'comingsoon'),
-    Markup.callbackButton('THOR', 'comingsoon'),
-    Markup.callbackButton('LOKI', 'comingsoon'),
-    Markup.callbackButton('More', 'comingsoon'),], {
+    Markup.callbackButton('Deposit USDT (ERC20)', 'usdt'),
+    Markup.callbackButton('Deposit ETH(ERC 20)', 'ether'),
+    Markup.callbackButton('Deposit USDT (BEP20)', 'usdt'),
+    Markup.callbackButton('Deposit BNB (BEP20)', 'bnb'),
+    Markup.callbackButton('Buy Alpha License', 'alpha'),
+    Markup.callbackButton('Buy Omega License', 'omega'),
+    Markup.callbackButton('Buy Sentinel License', 'sentinel'),
+    Markup.callbackButton('Buy Celestial License', 'celestial'),
+    Markup.callbackButton('Withdraw Balance', 'wd'),
+    Markup.callbackButton('Withdraw Profit', 'profit'),], {
     columns: 2,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 
-//cypherbotai
-bot.action('cypherbotai', (ctx) => {
-  var msg = 'Select the mode you want to do with <b>CypherBOT AI</b>';
+//deposit ether
+bot.action('ether', (ctx) => {
+  var msg = 'Please select the deposit amount you want';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Auto Mode', 'comingsoon'),
-    Markup.callbackButton('Semi Auto Mode', 'comingsoon'),], {
+    Markup.callbackButton('0.05 ETH', 'ether005'),
+    Markup.callbackButton('0.1 ETH', 'ether01'),
+    Markup.callbackButton('0.2 ETH', 'ether02'),
+    Markup.callbackButton('0.5 ETH', 'ether05'),
+    Markup.callbackButton('1 ETH', 'ether1'),
+    Markup.callbackButton('2 ETH', 'ether2'),
+    Markup.callbackButton('5 ETH', 'ether5'),
+    Markup.callbackButton('10 ETH', 'ether10'),], {
     columns: 2,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb
+bot.action('bnb', (ctx) => {
+  var msg = 'Please select the deposit amount you want';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('0.1 BNB', 'bnb01'),
+    Markup.callbackButton('0.2 BNB', 'bnb02'),
+    Markup.callbackButton('0.5 BNB', 'bnb05'),
+    Markup.callbackButton('1 BNB', 'bnb1'),
+    Markup.callbackButton('2 BNB', 'bnb2'),
+    Markup.callbackButton('5 BNB', 'bnb5'),
+    Markup.callbackButton('10 BNB', 'bnb10'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit usdt
+bot.action('usdt', (ctx) => {
+  var msg = 'Please select the deposit amount you want';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('50 USDT', 'deposit50'),
+    Markup.callbackButton('100 USDT', 'deposit100'),
+    Markup.callbackButton('150 USDT', 'deposit150'),
+    Markup.callbackButton('200 USDT', 'deposit200'),
+    Markup.callbackButton('500 USDT', 'deposit500'),
+    Markup.callbackButton('1000 USDT', 'deposit1000'),
+    Markup.callbackButton('2000 USDT', 'deposit2000'),
+    Markup.callbackButton('5000 USDT', 'deposit5000'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//buy alpha
+bot.action('alpha', (ctx) => {
+  var msg = 'Please send 0.1 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//buy omega
+bot.action('omega', (ctx) => {
+  var msg = 'Please send 0.25 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//buy sentinel
+bot.action('sentinel', (ctx) => {
+  var msg = 'Please send 0.3 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//buy celestial
+bot.action('celestial', (ctx) => {
+  var msg = 'Please send 0.5 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 0.1
+bot.action('bnb01', (ctx) => {
+  var msg = 'Please send 0.1 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 0.2
+bot.action('bnb02', (ctx) => {
+  var msg = 'Please send 0.2 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 0.5
+bot.action('bnb05', (ctx) => {
+  var msg = 'Please send 0.5 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 1
+bot.action('bnb1', (ctx) => {
+  var msg = 'Please send 1 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 2
+bot.action('bnb2', (ctx) => {
+  var msg = 'Please send 2 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 5
+bot.action('bnb5', (ctx) => {
+  var msg = 'Please send 5 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit bnb 10
+bot.action('bnb10', (ctx) => {
+  var msg = 'Please send 10 BNB to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 0.05
+bot.action('ether005', (ctx) => {
+  var msg = 'Please send 0.05 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 0.1
+bot.action('ether01', (ctx) => {
+  var msg = 'Please send 0.1 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 0.2
+bot.action('ether02', (ctx) => {
+  var msg = 'Please send 0.2 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 0.5
+bot.action('ether05', (ctx) => {
+  var msg = 'Please send 0.5 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 1
+bot.action('ether1', (ctx) => {
+  var msg = 'Please send 1 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 2
+bot.action('ether2', (ctx) => {
+  var msg = 'Please send 2 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 5
+bot.action('ether5', (ctx) => {
+  var msg = 'Please send 5 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit ether 10
+bot.action('ether10', (ctx) => {
+  var msg = 'Please send 10 ETH to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 50
+bot.action('deposit50', (ctx) => {
+  var msg = 'Please send 50 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+//deposit 100 
+bot.action('deposit100', (ctx) => {
+  var msg = 'Please send 100 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 150
+bot.action('deposit150', (ctx) => {
+  var msg = 'Please send 150 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 200
+bot.action('deposit200', (ctx) => {
+  var msg = 'Please send 200 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 500
+bot.action('deposit500', (ctx) => {
+  var msg = 'Please send 500 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 1000
+bot.action('deposit1000', (ctx) => {
+  var msg = 'Please send 1000 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 2000
+bot.action('deposit2000', (ctx) => {
+  var msg = 'Please send 2000 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//deposit 5000
+bot.action('deposit5000', (ctx) => {
+  var msg = 'Please send 5000 USDT to the address below via the wallet you used to register here';
+      msg += '\n';
+      msg += '\n';
+      msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Confirm', 'tx'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+//tx check
+bot.action('tx', (ctx) => {
+  //button click confirm tx
+  ctx.reply('Submit your Txn Tash/ Tx Id / Tx link');
 });
 
 //cexlist
@@ -593,7 +974,35 @@ bot.action('dexlist', (ctx) => {
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('Back To Journey', 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
+      columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
+  bot.action('wd', (ctx) => {
+    var msg = '<b>To withdraw the entire balance in your account, please fill in the form on our website!!!</b>';
+        msg += '\n'
+        msg += '\n'
+        msg += '<a href="https://cypherbot.tech">Website</a>'
+        msg += '\n'
+        msg += '\n'
+        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
+      columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
+  bot.action('profit', (ctx) => {
+    var msg = '<b>We distribute all profits every week, but if you want to withdraw profits earlier, please submit via the form we provide on our website!</b>';
+        msg += '\n'
+        msg += '\n'
+        msg += '<a href="https://cypherbot.tech">Website</a>'
+        msg += '\n'
+        msg += '\n'
+        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Back To Journey🔥’, 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -602,12 +1011,12 @@ bot.action('dexlist', (ctx) => {
 bot.action('twitter', (ctx) => {
   //button click twitter
   ctx.session.step = 2;
-  ctx.reply('Submit your email address!');
+  ctx.reply(‘🙏Please submit your email address!');
 });
 
-bot.action('name', (ctx) => {
+bot.action('moma', (ctx) => {
   ctx.session.step = 4;
-  ctx.reply('Please send your multichain wallet address');
+  ctx.reply(‘🤷‍♀️What should I call you? Please input your name');
 });
 
 bot.action('refresh', (ctx) => {
@@ -632,7 +1041,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'check')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Complete Registration', 'confirm')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
@@ -643,21 +1052,19 @@ bot.action('confirm', (ctx) => {
   checkDataAsync(ctx).then(function (uid) {
     var check = uid;
     console.log('CHECK', check);
-    refByNameAsync(ctx).then(function (uid) {
-    if (check == true) {
+    // refByNameAsync(ctx).then(function (uid) {
+    //   if (check == true) {
     saveDataAsync(ctx).then(function (uid) {
       var msg;
-      msg = 'Please Wait';
-      msg += '\n';
-      msg += 'Please use this referral link';
-      msg += '\n';
-      msg += 'https://t.me/cyphercatbot?start=';
-      msg += ctx.session.refNumber;
-      msg += '\n';
-      msg +=
-        'Bot is Fully Loaded';
-      ctx.reply(msg);
+      var msg = '<b>✅Registrations Succed!!!✅</b>';
+        msg += '\n'
+        msg += '\n'
+        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton(‘🔥Start Journey🔥’, 'Journey'),], {
+      columns: 1,
     });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
     // } else {
     //   ctx.reply('Please input all data');
     // }
