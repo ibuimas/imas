@@ -6,7 +6,7 @@ var token = config.telegraf_token;
 
 // Create a bot that uses 'polling' to fetch new updates
 const bot = new TelegramBot(token, { polling: true });
-const img_url = 'https://res.cloudinary.com/dbfydlpwo/image/upload/v1595278068/Airdrop-Telegram-Bot_oyxox2.jpg';
+const img_url = 'https://cypherbot.tech/logo.png';
 
 // variables to send to db
 var twitter_username = '';
