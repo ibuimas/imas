@@ -297,14 +297,14 @@ function firstMessage(ctx) {
 
 async function check(ctx) {
   var finalResult;
-  finalResult = '1. Submitted BEP20 address';
+  finalResult = '1. Submitted Wallet address';
   if (ctx.session.eth) {
     finalResult += ' ✅';
   } else {
     finalResult += ' ❌';
   }
   finalResult += '\n';
-  finalResult += '2. Submitted Twitter address';
+  finalResult += '2. Submitted Email address';
   if (ctx.session.twitter) {
     finalResult += ' ✅';
   } else {
@@ -312,7 +312,7 @@ async function check(ctx) {
   }
   finalResult += '\n';
 
-  finalResult += '3. Submitted retweet link';
+  finalResult += '3. Submitted Name';
   if (ctx.session.retweet) {
     finalResult += ' ✅';
   } else {
@@ -468,7 +468,7 @@ bot.action('delete', ({ deleteMessage }) => deleteMessage());
 
 bot.action('eth', (ctx) => {
   //button click ETH
-  ctx.reply('Please send your wallet address here.');
+  ctx.reply('Please send your mulwallet address here.');
   ctx.session.step = 3;
 });
 
@@ -605,8 +605,8 @@ bot.action('twitter', (ctx) => {
   ctx.reply('Submit your email address!');
 });
 
-bot.action('moma', (ctx) => {
-  ctx.session.step = 3;
+bot.action('name', (ctx) => {
+  ctx.session.step = 4;
   ctx.reply('Please send your multichain wallet address');
 });
 
@@ -632,7 +632,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'confirm')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Submit ✅', 'check')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
