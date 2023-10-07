@@ -1,12 +1,12 @@
 {
-  "name": "mochi-tele-bot",
+  "name": "cypherfund",
   "version": "1.0.0",
-  "description": "Mochi Bot",
+  "description": "LucyHarun",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
-  "author": "MochiLab",
+  "author": "LucyHarun",
   "license": "GPL-3.0",
   "dependencies": {
     "dotenv": "^8.2.0",
