@@ -596,7 +596,7 @@ bot.action('alpha', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -608,7 +608,7 @@ bot.action('omega', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -620,7 +620,7 @@ bot.action('sentinel', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -632,7 +632,7 @@ bot.action('celestial', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -644,7 +644,7 @@ bot.action('bnb01', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -656,7 +656,7 @@ bot.action('bnb02', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -668,7 +668,7 @@ bot.action('bnb05', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -680,7 +680,7 @@ bot.action('bnb1', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -692,7 +692,7 @@ bot.action('bnb2', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -704,7 +704,7 @@ bot.action('bnb5', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -716,7 +716,7 @@ bot.action('bnb10', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -728,7 +728,7 @@ bot.action('ether005', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -740,7 +740,7 @@ bot.action('ether01', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -752,7 +752,7 @@ bot.action('ether02', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -764,7 +764,7 @@ bot.action('ether05', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -776,7 +776,7 @@ bot.action('ether1', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -788,7 +788,7 @@ bot.action('ether2', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -800,7 +800,7 @@ bot.action('ether5', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -812,7 +812,7 @@ bot.action('ether10', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -824,7 +824,7 @@ bot.action('deposit50', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -837,7 +837,7 @@ bot.action('deposit100', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -849,7 +849,7 @@ bot.action('deposit150', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -861,7 +861,7 @@ bot.action('deposit200', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -873,7 +873,7 @@ bot.action('deposit500', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -885,7 +885,7 @@ bot.action('deposit1000', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -897,7 +897,7 @@ bot.action('deposit2000', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -909,7 +909,7 @@ bot.action('deposit5000', (ctx) => {
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Confirm', 'tx'),], {
+    Markup.callbackButton('✅Confirm', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
