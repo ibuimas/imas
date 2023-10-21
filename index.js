@@ -521,18 +521,12 @@ bot.action('Journey', (ctx) => {
   msg += '\n';
   msg += 'Please select the option';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('My Wallet', 'usdt'),], {
-    columns: 1,
-  });
-   var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('My Wallet', 'lock'),
     Markup.callbackButton('My Earnings', 'lock'),
     Markup.callbackButton('Withdrawl', 'lock'),
     Markup.callbackButton('Copy-Trade Influencer', 'influencer'),
-    Markup.callbackButton('Copy-Trade ANTBT', 'lock'),], {
-    columns: 2,
-  });
-   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('More', 'profit'),], {
+    Markup.callbackButton('Copy-Trade ANTBT', 'lock'),
+    Markup.callbackButton('More', 'comingsoon'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
