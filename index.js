@@ -274,6 +274,8 @@ function firstMessage(ctx) {
   finalResult += '❗️Please register to continue using this bot';
   finalResult += '\n';
   finalResult += '\n';
+  finalResult += 'v1.0.beta';
+  finalResult += '\n';
   finalResult +=
     'ⓒ 2023 AntBot AI';
   // finalResult += '\n';
@@ -354,28 +356,11 @@ function makeMessage(ctx) {
 }
 async function cek(ctx) {
   var finalResult;
-  finalResult = 'Your Deposit Balance';
-  if (ctx.session.eth) {
-    finalResult += ' ✅';
-  } else {
-    finalResult += ' ❌';
-  }
+  finalResult = 'Your Deposit Balance: <b>$5000</b>';
   finalResult += '\n';
-  finalResult += 'Susu';
-  if (ctx.session.twitter) {
-    finalResult += ' ✅';
-  } else {
-    finalResult += ' ❌';
-  }
+  finalResult += 'Funds in ANTBT Trading Pool: <b>$1200</b>';
   finalResult += '\n';
-
-  finalResult += '3';
-  if (ctx.session.moma) {
-    finalResult += ' ✅';
-  } else {
-    finalResult += ' ✅';
-  }
-  finalResult += '\n';
+  finalResult += 'Available Withdrawable Funds: <b>$3800</b>';
 
   return finalResult;
 }
@@ -388,8 +373,35 @@ function makeMessage(ctx) {
   finalResult += '🎫 Account Name: ';
   finalResult += ctx.session.moma;
   finalResult += '\n';
-  finalResult += 'License Type: ';
-  finalResult += ctx.session.eth;
+  finalResult += 'License Type: Sigma';
+
+  return finalResult;
+}
+
+async function earn(ctx) {
+  var finalResult;
+  finalResult = 'Your Total Trading Profit: <b>$2101</b>';
+  finalResult += '\n';
+  finalResult += 'Your Current Referrals: ';
+  finalResult += ctx.session.count || '0';
+  finalResult += '\n';
+  finalResult += 'Your Referral Earning: (5% x the total price of the license purchased by referred user)';
+  finalResult += '\n';
+  finalResult += 'Total Earnings: <b>$2101</b>';
+
+  return finalResult;
+}
+
+function makeMessage(ctx) {
+  var finalResult;
+  finalResult = '👤User ID: ';
+  finalResult += ctx.from.id;
+  finalResult += '\n';
+  finalResult += '🎫 Account Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += '👥 Your Referral link: https://t.me/AI_AntBot?start=';
+  finalResult += ctx.session.refNumber;
 
   return finalResult;
 }
@@ -999,10 +1011,10 @@ bot.action('influencer', (ctx) => {
       msg += '\n'
       msg += '❌ Unavailable Copy Trade'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Nebula✅', 'comingsoon'),
-    Markup.callbackButton('Nebula✅', 'comingsoon'),
-    Markup.callbackButton('Nebula✅', 'comingsoon'),
-    Markup.callbackButton('Nebula✅', 'comingsoon'),
+    Markup.callbackButton('Nebula✅', 'nebula'),
+    Markup.callbackButton('Nebula✅', 'nebula'),
+    Markup.callbackButton('Nebula✅', 'nebula'),
+    Markup.callbackButton('Nebula✅', 'nebula'),
     Markup.callbackButton('Nebula❌', 'unavailable'),
     Markup.callbackButton('Nebula❌', 'unavailable'),
     Markup.callbackButton('Nebula❌', 'unavailable'),
@@ -1013,7 +1025,7 @@ bot.action('influencer', (ctx) => {
     ctx.reply(msg, Extra.HTML().markup(keyboard));
   });
 
-bot.action('starlord', (ctx) => {
+bot.action('nebula', (ctx) => {
   var msg = '🔥Here are upto date data from Nebula🔥';
       msg += '\n';
       msg += '\n';
@@ -1163,6 +1175,23 @@ bot.action('unlockmw', async (ctx) => {
     console.log(e);
   }
   var msg = await cek(ctx);
+  var info = makeMessage(ctx);
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
+    columns: 1,
+  });
+  ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('unlockme', async (ctx) => {
+  try {
+    let user = await ctx.getChatMember(ctx.from.id, '');
+    if (user && !user.is_bot) {
+      ctx.session.joinTele = '1';
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  var msg = await earn(ctx);
   var info = makeMessage(ctx);
   var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
     columns: 1,
