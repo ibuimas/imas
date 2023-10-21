@@ -272,8 +272,10 @@ function firstMessage(ctx) {
   finalResult += '\n';
   finalResult += '\n';
   finalResult += '❗️Please register to continue using this bot';
+  finalResult += '\n';
+  finalResult += '\n';
   finalResult +=
-    'ⓒ 2023 CypherBOT, Tech.';
+    'ⓒ 2023 AntBot AI';
   // finalResult += '\n';
   // finalResult += '\n';
   // finalResult += '1.📌 Submit your receiver ETH address.';
@@ -339,7 +341,7 @@ function makeMessage(ctx) {
   finalResult += '📧email address: ';
   finalResult += ctx.session.twitter;
   finalResult += '\n';
-  finalResult += '👥Referral link: https://t.me/CypherFundbot?start=';
+  finalResult += '👥Referral link: https://t.me/AI_AntBot?start=';
   finalResult += ctx.session.refNumber;
   finalResult += '\n';
   finalResult += '🔢Number of referrals: ';
@@ -1083,10 +1085,10 @@ bot.action('starlord', (ctx) => {
     var msg = '<b>To withdraw the entire balance in your account, please fill in the form on our website!!!</b>';
         msg += '\n'
         msg += '\n'
-        msg += '<a href="https://cypherbot.tech">Website</a>'
+        msg += '<a href="https://AntBot.tech">Website</a>'
         msg += '\n'
         msg += '\n'
-        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+        msg += '<i>ⓒ 2023 AntBot, Tech.</i>'
     var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
       columns: 1,
     });
@@ -1097,10 +1099,10 @@ bot.action('starlord', (ctx) => {
     var msg = '<b>We distribute all profits every week, but if you want to withdraw profits earlier, please submit via the form we provide on our website!</b>';
         msg += '\n'
         msg += '\n'
-        msg += '<a href="https://cypherbot.tech">Website</a>'
+        msg += '<a href="https://Antbot.tech">Website</a>'
         msg += '\n'
         msg += '\n'
-        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
+        msg += '<i>ⓒ 2023 AntBot, Tech.</i>'
     var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
       columns: 1,
     });
@@ -1158,7 +1160,6 @@ bot.action('confirm', (ctx) => {
       var msg = '<b>Congratulation! ✅Registration Succeeded✅</b>';
         msg += '\n'
         msg += '\n'
-        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
     var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Start Journey🔥', 'Journey'),], {
       columns: 1,
     });
