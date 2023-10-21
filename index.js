@@ -256,26 +256,26 @@ var saveDataAsync = function (ctx) {
 
 //keyboard
 const keyboard = Markup.inlineKeyboard([
-  Markup.callbackButton('✅Continue✅', 'twitter'),
-  Markup.callbackButton('❌Skip Registrations❌', 'intro'),], {
+  Markup.callbackButton('Yes, I want to register!', 'intro'),], {
   columns: 1,
 });
 
 function firstMessage(ctx) {
   var finalResult;
 
-  finalResult = `👋Welcome @${ctx.session.username} to CypherFUND!`;
+  finalResult = `👋Welcome @${ctx.session.username} to AntBot!`;
   finalResult += '\n';
   finalResult += '\n';
   finalResult +=
     '😊Please register to continue using this bot';
   finalResult += '\n';
   finalResult += '\n';
-  finalResult += 'By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
+  finalResult += '📝By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
   finalResult += '\n';
-  finalResult += 'Cypherbot.tech ensures that your information will be treated confidentially.';
+  finalResult += '🔏AntBot ensures that your information will be treated confidentially.';
   finalResult += '\n';
   finalResult += '\n';
+  finalResult += '❗️Please register to continue using this bot';
   finalResult +=
     'ⓒ 2023 CypherBOT, Tech.';
   // finalResult += '\n';
@@ -295,14 +295,14 @@ function firstMessage(ctx) {
 
 async function check(ctx) {
   var finalResult;
-  finalResult = '1. Submitted BEP20 address';
+  finalResult = '1. Submitted ERC-20 address';
   if (ctx.session.eth) {
     finalResult += ' ✅';
   } else {
     finalResult += ' ❌';
   }
   finalResult += '\n';
-  finalResult += '2. Submitted Twitter address';
+  finalResult += '2. Submitted Email address';
   if (ctx.session.twitter) {
     finalResult += ' ✅';
   } else {
@@ -372,7 +372,7 @@ async function stepCheck(ctx) {
   if (ctx.session.step == 2) {
     ctx.session.twitter = ctx.message.text;
     ctx.session.step = 3;
-    ctx.reply('💲Please send your wallet address');
+    ctx.reply('Please type your ERC-20 Wallet Address');
   }
   else if (ctx.session.step == 3) {
     if (ethereum_address.isAddress(ctx.message.text.toString())) {
@@ -385,29 +385,26 @@ async function stepCheck(ctx) {
         'Hit the ✅Next✅ button to process your registration.',
         Extra.HTML().markup(keyboard)
       );}else 
-        ctx.reply('⁉️Please input a valid wallet address!');
+        ctx.reply('⁉️Please input a valid ERC-20 wallet address!');
       }
     else if (ctx.session.step == 4) {
       ctx.session.moma = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Register✅', 'check')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Continue✅', 'check')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
         ctx.from.id,
-        'Hit ✅Register✅ button to submit your registration.',
+        'Hit the ✅Continue✅ button to submit your registration.',
         Extra.HTML().markup(keyboard)
       );}else {
-        var msg = '🔄Please wait! We are verifying your transactions.🔄';
+        var msg = 'Please double-check it one more time. Once you submit this step, you can not go back.';
   msg += '\n';
   msg += '\n';
   msg +=
-    'Follow us on <a href="https://twitter.com/cypherbottech">X</a>';
-  msg += '\n';
-  msg += 'Join our <a href="https://t.me/cypherbotofficial">Telegram</a> Group';
-  msg += '\n';
-  msg += '\n';
-  msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Journey🔥', 'Journey')], {
+    'If the TXID is incorrect, the purchase will be assumed INVALID, and you should contact our Telegram representatives.';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥 I’ve double check it. Let’s Go! 🔥', 'thanklicense'),
+  Markup.callbackButton('Resubmit', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -505,38 +502,55 @@ bot.action('eth', (ctx) => {
 
 bot.action('intro', (ctx) => {
   ctx.session.step = 1;
-  var msg = '<b>Make sure you are followed our X/Twitter and joined our Telegram group to continuesly using this bot.</b>';
+  var msg = '<b>🤖Make sure you are followed our X/Twitter and joined our Telegram group to continuesly using this bot.</b>';
   msg += '\n';
   msg += '\n';
-  msg +=
-    'Follow us on <a href="https://twitter.com/cypherbottech">X</a>';
+  msg += '✅Follow us on <a href="https://twitter.com/AntBotAi">X</a>';
   msg += '\n';
-  msg += 'Join our <a href="https://t.me/cypherbotofficial">Telegram</a> Group';
+  msg += '✅Join our <a href="https://t.me/AntBotAi_official">Telegram</a> Group';
   msg += '\n';
   msg += '\n';
-  msg += '<a href="https://twitter.com/cypherbottech">CypherBOT</a>';
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Start Journey🔥', 'Journey')], {
+  msg += '🌐AntBot.tech';
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('I have done it!', 'twitter')], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 //Journey
 bot.action('Journey', (ctx) => {
-  var msg = '<b>Here You Go!</b>';
+  var msg = '<b>🔥Let’s make money!🔥</b>';
   msg += '\n';
   msg += '\n';
-  msg += 'Deposit or buy one or more <b>cBOT License</b> to your account! And get 60% shared Profit from CypherFUND AI Trade BOT';
+  msg += 'Please select the option';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Deposit USDT (ERC20)', 'usdt'),
-    Markup.callbackButton('Deposit ETH(ERC 20)', 'ether'),
-    Markup.callbackButton('Deposit USDT (BEP20)', 'usdt'),
-    Markup.callbackButton('Deposit BNB (BEP20)', 'bnb'),
-    Markup.callbackButton('Buy Alpha License', 'alpha'),
-    Markup.callbackButton('Buy Omega License', 'omega'),
-    Markup.callbackButton('Buy Sentinel License', 'sentinel'),
-    Markup.callbackButton('Buy Celestial License', 'celestial'),
-    Markup.callbackButton('Withdraw Balance', 'wd'),
-    Markup.callbackButton('Withdraw Profit', 'profit'),], {
+    Markup.callbackButton('My Wallet', 'usdt'),], {
+    columns: 1,
+  });
+   var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('My Earnings', 'lock'),
+    Markup.callbackButton('Withdrawl', 'lock'),
+    Markup.callbackButton('Copy-Trade Influencer', 'influencer'),
+    Markup.callbackButton('Copy-Trade ANTBT', 'lock'),], {
+    columns: 2,
+  });
+   var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('More', 'profit'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('lock', (ctx) => {
+  var msg = 'It appears you do not have an ANTBT License.';
+      msg += '\n'
+      msg += '\n'
+      msg += 'You must possess an ANTBT License to proceed'
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Get Gamma License ', 'gamma'),
+    Markup.callbackButton('Get Delta License ', 'delta'),
+    Markup.callbackButton('Get Sigma License ', 'sigma'),
+    Markup.callbackButton('Get Alpha License ', 'alpha'),
+    Markup.callbackButton('🔥 I will get the License Soon! 🔥', 'Journey'),], {
     columns: 2,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -591,48 +605,62 @@ bot.action('usdt', (ctx) => {
 });
 //buy alpha
 bot.action('alpha', (ctx) => {
-  var msg = 'Please send 0.1 ETH to the address below via the wallet you used to register here';
+  var msg = 'You will purchase Alpha License';
       msg += '\n';
+      msg += '\n';
+      msg += 'Please send 0.1 ETH to AntBot ERC-20 wallet below';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+    Markup.callbackButton('I have sent 0.1 ETH', 'tx'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
-//buy omega
-bot.action('omega', (ctx) => {
-  var msg = 'Please send 0.25 ETH to the address below via the wallet you used to register here';
+//buy Sigma
+bot.action('sigma', (ctx) => {
+  var msg = 'You will purchase Sigma License';
       msg += '\n';
+      msg += '\n';
+      msg += 'Please send 0.5 ETH to AntBot ERC-20 wallet below';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+   var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('I have sent 0.5 ETH', 'tx'),
+   Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
-//buy sentinel
-bot.action('sentinel', (ctx) => {
-  var msg = 'Please send 0.3 ETH to the address below via the wallet you used to register here';
+//buy delta
+bot.action('delta', (ctx) => {
+  var msg = 'You will purchase Delta License';
       msg += '\n';
+      msg += '\n';
+      msg += 'Please send 0.3 ETH to AntBot ERC-20 wallet below';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+    Markup.callbackButton('I have sent 0.3 ETH', 'tx'),
+  Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
-//buy celestial
-bot.action('celestial', (ctx) => {
-  var msg = 'Please send 0.5 ETH to the address below via the wallet you used to register here';
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+//buy gamma
+bot.action('gamma', (ctx) => {
+  var msg = 'You will purchase Sigma License';
       msg += '\n';
+      msg += '\n';
+      msg += 'Please send 0.25 ETH to AntBot ERC-20 wallet below';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+   var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('I have sent 0.25 ETH', 'tx'),
+   Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -735,12 +763,13 @@ bot.action('ether005', (ctx) => {
 });
 //deposit ether 0.1
 bot.action('ether01', (ctx) => {
-  var msg = 'Please send 0.1 ETH to the address below via the wallet you used to register here';
+  var msg = 'You will purchase Alpha License';
       msg += '\n';
       msg += '\n';
+      msg += 'Please send 0.1ETH to AntBot ERC-20 wallet below';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+    Markup.callbackButton('I have sent 0.1 ETH', 'tx'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -759,8 +788,10 @@ bot.action('ether02', (ctx) => {
 });
 //deposit ether 0.5
 bot.action('ether05', (ctx) => {
-  var msg = 'Please send 0.5 ETH to the address below via the wallet you used to register here';
+  var msg = 'You will purchase Sigma License';
       msg += '\n';
+      msg += '\n';
+      msg += 'Please send 0.5ETH to AntBot ERC-20 wallet below';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
   var keyboard = Markup.inlineKeyboard([
@@ -918,8 +949,22 @@ bot.action('deposit5000', (ctx) => {
 //tx check
 bot.action('tx', (ctx) => {
   //button click confirm tx
-  ctx.reply('Submit your Txn Tash/ Tx Id / Tx link');
+  ctx.reply('Please Submit your TXID');
 });
+
+bot.action('thanklicense', (ctx) => {
+   var msg = 'Thank you for purchasing Our License.';
+      msg += '\n'
+      sg += '\n'
+      msg += 'Please wait for our team to verify, which typically takes a maximum of 3x24 hours.'
+      msg += '\n'
+      msg += 'You will receive a notification once the verification is complete.'
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥 Back to Journey 🔥', 'Journey'),], {
+    columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
 
 //cexlist
 bot.action('cexlist', (ctx) => {
@@ -946,35 +991,95 @@ bot.action('cexlist', (ctx) => {
   });
 
   //dexlist
-bot.action('dexlist', (ctx) => {
-  var msg = 'Select the DEX you want to get started';
+bot.action('influencer', (ctx) => {
+  var msg = '👇Choose the influencer you wish to copy-trade in order to begin.👇';
+      msg += '\n'
+      msg += '✅ Available Copy Trade'
+      msg += '\n'
+      msg += '❌ Unavailable Copy Trade'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('dYdX', 'comingsoon'),
-    Markup.callbackButton('Uniswap ARB', 'comingsoon'),
-    Markup.callbackButton('Kine Protocol Matic', 'comingsoon'),
-    Markup.callbackButton('Uniswap ETH', 'comingsoon'),
-    Markup.callbackButton('Pancake BSC', 'comingsoon'),
-    Markup.callbackButton('Curve', 'comingsoon'),
-    Markup.callbackButton('Apex Protocol', 'comingsoon'),
-    Markup.callbackButton('DODO BSC', 'comingsoon'),
-    Markup.callbackButton('DODO ETH', 'comingsoon'),
-    Markup.callbackButton('BaseSwap', 'comingsoon'),
-    Markup.callbackButton('OpenOcean', 'comingsoon'),
-    Markup.callbackButton('ApolloX', 'comingsoon'),
-    Markup.callbackButton('KlaySwap', 'comingsoon'),
-    Markup.callbackButton('SushiSwap', 'comingsoon'),
-    Markup.callbackButton('More', 'comingsoon'),], {
+    Markup.callbackButton('Nebula✅', 'comingsoon'),
+    Markup.callbackButton('Nebula✅', 'comingsoon'),
+    Markup.callbackButton('Nebula✅', 'comingsoon'),
+    Markup.callbackButton('Nebula✅', 'comingsoon'),
+    Markup.callbackButton('Nebula❌', 'unavailable'),
+    Markup.callbackButton('Nebula❌', 'unavailable'),
+    Markup.callbackButton('Nebula❌', 'unavailable'),
+    Markup.callbackButton('Nebula❌', 'unavailable'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'), ], {
     columns: 2,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
   });
 
+bot.action('starlord', (ctx) => {
+  var msg = '🔥Here are upto date data from Nebula🔥';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊CRYPTO IDX';
+      msg += '\n';
+      msg += '08.00	BUY🟢';
+      msg += '\n';
+      msg += '09.00	BUY🟢';
+      msg += '\n';
+      msg += '10.00	SELL🔴';
+      msg += '\n';
+      msg += '11.00	BUY🟢';
+      msg += '\n';
+      msg += '12.00	BUY🟢';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊EUR USD';
+      msg += '\n';
+      msg += '08.00 SELL🔴';
+      msg += '\n';
+      msg += '09.00 BUY🟢';
+      msg += '\n';
+      msg += '10.00 SELL🔴';
+      msg += '\n';
+      msg += '11.00 BUY🟢';
+      msg += '\n';
+      msg += '12.00 BUY🟢';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+
+  bot.action('unavailable', (ctx) => {
+    var msg = '<b>This Influencers is currently UNAVAILABLE!</b>';
+        msg += '\n'
+        msg += '\n'
+        msg += 'Please select the available Influencers✅'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+      columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
   bot.action('comingsoon', (ctx) => {
-    var msg = '<b>COMING SOON!!!</b>';
+    var msg = '<b>Stay Tune with Us!</b>';
         msg += '\n'
         msg += '\n'
-        msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back To Journey🔥', 'Journey'),], {
+        msg += 'More Features are Coming Soon!';
+        msg += '\n'
+        msg += '\n'
+        msg += 'Follow our socials to get our latest update.';
+        msg += '\n'
+        msg += '<a href="https://antbot.tech">Website</a>';
+        msg += '\n'
+        msg += '<a href="https://x.com/AntBotAi">Twitter</a>';
+        msg += '\n'
+        msg += '<a href="https://t.me/AntBotAI_Official">Telegram Group</a>';
+        msg += '\n'
+        msg += '<a href="https://t.me/AntBotAI_Ann">Telegram Announcement</a>'
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1011,12 +1116,12 @@ bot.action('dexlist', (ctx) => {
 bot.action('twitter', (ctx) => {
   //button click twitter
   ctx.session.step = 2;
-  ctx.reply('🙏Please submit your email address!');
+  ctx.reply('📧Please type your Email Address');
 });
 
 bot.action('moma', (ctx) => {
   ctx.session.step = 4;
-  ctx.reply(' 🤷‍♀️ What should I call you? Please input your name');
+  ctx.reply('🤷‍♀️ What should I call you? Please input your name');
 });
 
 bot.action('refresh', (ctx) => {
@@ -1041,7 +1146,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Complete Registration', 'confirm')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Start Journey🔥', 'confirm')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
@@ -1056,7 +1161,7 @@ bot.action('confirm', (ctx) => {
     //   if (check == true) {
     saveDataAsync(ctx).then(function (uid) {
       var msg;
-      var msg = '✅<b>Registrations Succed!!!</b>✅';
+      var msg = '<b>Congratulation! ✅Registration Succeeded✅</b>';
         msg += '\n'
         msg += '\n'
         msg += '<i>ⓒ 2023 CypherBOT, Tech.</i>'
