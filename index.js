@@ -352,6 +352,47 @@ function makeMessage(ctx) {
 
   return finalResult;
 }
+async function cek(ctx) {
+  var finalResult;
+  finalResult = 'Your Deposit Balance';
+  if (ctx.session.eth) {
+    finalResult += ' ✅';
+  } else {
+    finalResult += ' ❌';
+  }
+  finalResult += '\n';
+  finalResult += 'Susu';
+  if (ctx.session.twitter) {
+    finalResult += ' ✅';
+  } else {
+    finalResult += ' ❌';
+  }
+  finalResult += '\n';
+
+  finalResult += '3';
+  if (ctx.session.moma) {
+    finalResult += ' ✅';
+  } else {
+    finalResult += ' ✅';
+  }
+  finalResult += '\n';
+
+  return finalResult;
+}
+
+function makeMessage(ctx) {
+  var finalResult;
+  finalResult = '👤User ID: ';
+  finalResult += ctx.from.id;
+  finalResult += '\n';
+  finalResult += '🎫 Account Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += 'License Type: ';
+  finalResult += ctx.session.eth;
+
+  return finalResult;
+}
 
 async function initMessage(ctx) {
   if (ctx.session.found != '1') {
@@ -531,6 +572,23 @@ bot.action('Journey', (ctx) => {
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
+//newJourney
+bot.action('newJourney', (ctx) => {
+  var msg = '<b>🔥Let’s make money!🔥</b>';
+  msg += '\n';
+  msg += '\n';
+  msg += 'Please select the option';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('My Wallet', 'unlockmw'),
+    Markup.callbackButton('My Earnings', 'unlockme'),
+    Markup.callbackButton('Withdrawl', 'unlockwd'),
+    Markup.callbackButton('Copy-Trade Influencer', 'influencer'),
+    Markup.callbackButton('Copy-Trade ANTBT', 'unlockct'),
+    Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
 
 bot.action('lock', (ctx) => {
   var msg = 'It appears you do not have an ANTBT License.';
@@ -548,53 +606,6 @@ bot.action('lock', (ctx) => {
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 
-//deposit ether
-bot.action('ether', (ctx) => {
-  var msg = 'Please select the deposit amount you want';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('0.05 ETH', 'ether005'),
-    Markup.callbackButton('0.1 ETH', 'ether01'),
-    Markup.callbackButton('0.2 ETH', 'ether02'),
-    Markup.callbackButton('0.5 ETH', 'ether05'),
-    Markup.callbackButton('1 ETH', 'ether1'),
-    Markup.callbackButton('2 ETH', 'ether2'),
-    Markup.callbackButton('5 ETH', 'ether5'),
-    Markup.callbackButton('10 ETH', 'ether10'),], {
-    columns: 2,
-  });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-});
-//deposit bnb
-bot.action('bnb', (ctx) => {
-  var msg = 'Please select the deposit amount you want';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('0.1 BNB', 'bnb01'),
-    Markup.callbackButton('0.2 BNB', 'bnb02'),
-    Markup.callbackButton('0.5 BNB', 'bnb05'),
-    Markup.callbackButton('1 BNB', 'bnb1'),
-    Markup.callbackButton('2 BNB', 'bnb2'),
-    Markup.callbackButton('5 BNB', 'bnb5'),
-    Markup.callbackButton('10 BNB', 'bnb10'),], {
-    columns: 2,
-  });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-});
-//deposit usdt
-bot.action('usdt', (ctx) => {
-  var msg = 'Please select the deposit amount you want';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('50 USDT', 'deposit50'),
-    Markup.callbackButton('100 USDT', 'deposit100'),
-    Markup.callbackButton('150 USDT', 'deposit150'),
-    Markup.callbackButton('200 USDT', 'deposit200'),
-    Markup.callbackButton('500 USDT', 'deposit500'),
-    Markup.callbackButton('1000 USDT', 'deposit1000'),
-    Markup.callbackButton('2000 USDT', 'deposit2000'),
-    Markup.callbackButton('5000 USDT', 'deposit5000'),], {
-    columns: 2,
-  });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-});
 //buy alpha
 bot.action('alpha', (ctx) => {
   var msg = 'You will purchase Alpha License';
@@ -950,7 +961,7 @@ bot.action('thanklicense', (ctx) => {
       msg += '\n'
       msg += 'You will receive a notification once the verification is complete.'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('🔥 Back to Journey 🔥', 'Journey'),], {
+    Markup.callbackButton('🔥 Back to Journey 🔥', 'newJourney'),], {
     columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1137,6 +1148,23 @@ bot.action('check', async (ctx) => {
   var msg = await check(ctx);
   var info = makeMessage(ctx);
   var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Start Journey🔥', 'confirm')], {
+    columns: 1,
+  });
+  ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('unlockmw', async (ctx) => {
+  try {
+    let user = await ctx.getChatMember(ctx.from.id, '');
+    if (user && !user.is_bot) {
+      ctx.session.joinTele = '1';
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  var msg = await cek(ctx);
+  var info = makeMessage(ctx);
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
