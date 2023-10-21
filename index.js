@@ -266,10 +266,6 @@ function firstMessage(ctx) {
   finalResult = `👋Welcome @${ctx.session.username} to AntBot!`;
   finalResult += '\n';
   finalResult += '\n';
-  finalResult +=
-    '😊Please register to continue using this bot';
-  finalResult += '\n';
-  finalResult += '\n';
   finalResult += '📝By proceeding to use the bot, you confirm that you have read and agreed to our Terms and Service.';
   finalResult += '\n';
   finalResult += '🔏AntBot ensures that your information will be treated confidentially.';
@@ -646,8 +642,6 @@ bot.action('delta', (ctx) => {
   Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
     columns: 1,
   });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-});
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 //buy gamma
