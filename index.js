@@ -354,6 +354,59 @@ function makeMessage(ctx) {
 
   return finalResult;
 }
+async function balance(ctx) {
+  var finalResult;
+  finalResult = 'Funds in ANTBT Trading Pool: <b>$1200</b>';
+
+  return finalResult;
+}
+
+function makeMessage(ctx) {
+  var finalResult;
+  finalResult = '👤User ID: ';
+  finalResult += ctx.from.id;
+  finalResult += '\n';
+  finalResult += '🎫 Account Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += 'License Type: SIGMA';
+
+  return finalResult;
+}
+
+async function op(ctx) {
+  var finalResult;
+  finalResult = 'ANTBT Current Position:';
+  finalResult += '\n';
+  finalResult += 'EURUSD ';
+  finalResult += '🔴19.4';
+  finalResult += '\n';
+  finalResult += '🟢17.6';
+  finalResult += '\n';
+  finalResult += '🟢20.7';
+  finalResult += '\n';
+  finalResult += '\n';
+  finalResult += 'JPYUSD';
+  finalResult += '🟢9.5';
+  finalResult += '\n';
+  finalResult += '🔴15.3';
+
+  return finalResult;
+}
+
+function makeMessage(ctx) {
+  var finalResult;
+  finalResult = '👤User ID: ';
+  finalResult += ctx.from.id;
+  finalResult += '\n';
+  finalResult += '🎫 Account Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += 'License Type: SIGMA';
+
+  return finalResult;
+}
+
 async function cek(ctx) {
   var finalResult;
   finalResult = 'Your Deposit Balance: <b>$5000</b>';
@@ -373,7 +426,7 @@ function makeMessage(ctx) {
   finalResult += '🎫 Account Name: ';
   finalResult += ctx.session.moma;
   finalResult += '\n';
-  finalResult += 'License Type: Sigma';
+  finalResult += 'License Type: SIGMA';
 
   return finalResult;
 }
@@ -597,6 +650,51 @@ bot.action('newJourney', (ctx) => {
     Markup.callbackButton('Copy-Trade Influencer', 'influencer'),
     Markup.callbackButton('Copy-Trade ANTBT', 'unlockct'),
     Markup.callbackButton('More', 'comingsoon'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+
+bot.action('unlockct', (ctx) => {
+  var msg = '🔥 Let’s make money! 🔥';
+      msg += '\n'
+      msg += '\n'
+      msg += 'Please select the option'
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Deposit to ANTBT', 'comingsoon'),
+    Markup.callbackButton('My Current ANTBT Balance', 'antbtbalance'),
+    Markup.callbackButton('ANTBT Current Open Position', 'antbtop'),
+    Markup.callbackButton('Stop ANTBT Copy-Trade', 'stopct'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('stopct', (ctx) => {
+  var msg = 'Are you certain you wish to discontinue the ANTBT Copy-Trade service?';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('Yes, I want to stop', 'stop'),
+    Markup.callbackButton('🔥Back To Home Menu🔥', 'newJourney'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('stop', (ctx) => {
+  var msg = 'Your funds are currently held within the ANTBT Trading Pool.';
+  msg += '\n'
+  msg += '\n'  
+  msg += 'We will initiate the processing of your ANTBT Copy-Trade once all open positions have been closed.'
+  msg += '\n'
+  msg += '\n'
+  msg += 'Please allow up to a maximum of 7x24 hours to receive your deposited funds and profits in your wallet.'
+  msg += '\n'
+  msg += '\n'
+ msg += 'We appreciate your patience! Thank you!'
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥Back To Home Menu🔥', 'newJourney'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1198,6 +1296,41 @@ bot.action('unlockme', async (ctx) => {
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
 });
+
+bot.action('antbtbalance', async (ctx) => {
+  try {
+    let user = await ctx.getChatMember(ctx.from.id, '');
+    if (user && !user.is_bot) {
+      ctx.session.joinTele = '1';
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  var msg = await balance(ctx);
+  var info = makeMessage(ctx);
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
+    columns: 1,
+  });
+  ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('antbtop', async (ctx) => {
+  try {
+    let user = await ctx.getChatMember(ctx.from.id, '');
+    if (user && !user.is_bot) {
+      ctx.session.joinTele = '1';
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  var msg = await op(ctx);
+  var info = makeMessage(ctx);
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
+    columns: 1,
+  });
+  ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
+});
+
 
 bot.action('confirm', (ctx) => {
   //button click confirm
