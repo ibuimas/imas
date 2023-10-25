@@ -476,7 +476,7 @@ async function stepCheck(ctx) {
   if (ctx.session.step == 2) {
     ctx.session.twitter = ctx.message.text;
     ctx.session.step = 3;
-    ctx.reply('Please type your ERC-20 Wallet Address');
+    ctx.reply('Please input your ERC-20 Wallet Address');
   }
   else if (ctx.session.step == 3) {
     if (ethereum_address.isAddress(ctx.message.text.toString())) {
@@ -489,16 +489,16 @@ async function stepCheck(ctx) {
         'Hit the ✅Next✅ button to process your registration.',
         Extra.HTML().markup(keyboard)
       );}else 
-        ctx.reply('⁉️Please input a valid ERC-20 wallet address!');
+        ctx.reply('Please input a valid ERC-20 wallet address❗️');
       }
     else if (ctx.session.step == 4) {
       ctx.session.moma = ctx.message.text.toString();
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Continue✅', 'check')], {
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Submit✅', 'check')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
         ctx.from.id,
-        'Hit the ✅Continue✅ button to submit your registration.',
+        'Hit the ✅Submit✅ button to submit your registration.',
         Extra.HTML().markup(keyboard)
       );}else {
         var msg = 'Please double-check it one more time. Once you submit this step, you can not go back.';
@@ -1257,7 +1257,7 @@ bot.action('check', async (ctx) => {
   }
   var msg = await check(ctx);
   var info = makeMessage(ctx);
-  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Start Journey🔥', 'confirm')], {
+  var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Confirm🔥', 'confirm')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
@@ -1344,7 +1344,7 @@ bot.action('confirm', (ctx) => {
       var msg = '<b>Congratulation! ✅Registration Succeeded✅</b>';
         msg += '\n'
         msg += '\n'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Start Journey🔥', 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Awesome!🔥', 'Journey'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
