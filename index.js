@@ -1071,7 +1071,7 @@ bot.action('thanklicense', (ctx) => {
       msg += '\n'
       msg += 'You will receive a notification once the verification is complete.'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('🔥 Back to Journey 🔥', 'newJourney'),], {
+    Markup.callbackButton('🔥 Back to Home Menu 🔥', 'newJourney'),], {
     columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
