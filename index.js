@@ -522,36 +522,40 @@ async function stepCheck(ctx) {
         ctx.from.id,
         'Hit the ✅Submit✅ button to submit your registration.',
         Extra.HTML().markup(keyboard)
-      );}else {
-        var msg = 'Please double-check it one more time. Once you submit this step, you can not go back.';
-  msg += '\n';
-  msg += '\n';
-  msg +=
-    'If the TXID is incorrect, the purchase will be assumed INVALID, and you should contact our Telegram representatives.';
-  var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('🔥 I’ve double check it. Let’s Go! 🔥', 'thanklicense'),
-  Markup.callbackButton('Resubmit', 'tx'),], {
-    columns: 1,
-  });
-  ctx.reply(msg, Extra.HTML().markup(keyboard));
-     }
-    }
-
-async function stepCheck(ctx) {
-  //step check
-  if (ctx.session.step == 1) {
-    ctx.session.withdrawl = ctx.message.text;
-    ctx.session.step == 2
-      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Back✅', 'newJourney')], {
+      );}
+    if (ctx.session.step == 6) {
+      ctx.session.withdrawl = ctx.message.text;
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('Withdrawl', 'wdprocess')], {
         columns: 1,
       });
       ctx.telegram.sendMessage(
         ctx.from.id,
-        'Back',
+        'Hit ✅ button to submit.',
         Extra.HTML().markup(keyboard)
-     }
-    }
+      );}
+      if (ctx.session.step == 7) {
+        ctx.session.deposit300 = ctx.message.text;
+        var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅', 'wdprocess')], {
+          columns: 1,
+        });
+        ctx.telegram.sendMessage(
+          ctx.from.id,
+          'Thanks! Order received',
+          Extra.HTML().markup(keyboard)
+        );}
 
+        if (ctx.session.step == 8) {
+          ctx.session.sigma = ctx.message.text;
+          var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅back✅', 'newJourney')], {
+            columns: 1,
+          });
+          ctx.telegram.sendMessage(
+            ctx.from.id,
+            'Thanks! Order received',
+            Extra.HTML().markup(keyboard)
+          );}
+}
+      
 //bot init
 const bot = new Telegraf(config.telegraf_token); // Let's instantiate a bot using our token.
 bot.use(session());
@@ -755,6 +759,20 @@ bot.action('stop', (ctx) => {
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 
+bot.action('wdprocess', (ctx) => {
+    var msg = 'Thanks';
+        msg += '\n';
+        msg += '\n';
+        msg += 'Please wait';
+        msg += '\n';
+        msg += 'Ok';
+     var keyboard = Markup.inlineKeyboard([
+     Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+      columns: 1,
+    });
+    ctx.reply(msg, Extra.HTML().markup(keyboard));
+  });
+
 bot.action('lock', (ctx) => {
   var msg = 'It appears you do not have an ANTBT License.';
       msg += '\n'
@@ -788,6 +806,7 @@ bot.action('alpha', (ctx) => {
 });
 //buy Sigma
 bot.action('sigma', (ctx) => {
+ctx.session.step = 8;
   var msg = 'You will purchase Sigma License';
       msg += '\n';
       msg += '\n';
@@ -1454,7 +1473,7 @@ bot.action('moma', (ctx) => {
 });
 
 bot.action('withdrawl', (ctx) => {
-  ctx.session.step = 1;
+  ctx.session.step = 6;
   ctx.reply('Type Amount that you want to Withdrawl. If you want to withdraw $100, please type 100');
 });
 
