@@ -378,7 +378,8 @@ async function op(ctx) {
   var finalResult;
   finalResult = 'ANTBT Current Position:';
   finalResult += '\n';
-  finalResult += 'EURUSD ';
+  finalResult += 'EURUSD';
+  finalResult += '\n';
   finalResult += '🔴19.4';
   finalResult += '\n';
   finalResult += '🟢17.6';
@@ -387,6 +388,7 @@ async function op(ctx) {
   finalResult += '\n';
   finalResult += '\n';
   finalResult += 'JPYUSD';
+  finalResult += '\n';
   finalResult += '🟢9.5';
   finalResult += '\n';
   finalResult += '🔴15.3';
@@ -430,7 +432,27 @@ function makeMessage(ctx) {
 
   return finalResult;
 }
+async function wd(ctx) {
+  var finalResult;
+  finalResult += 'Funds in ANTBT Trading Pool: <b>$5200</b>';
+  finalResult += '\n';
+  finalResult += 'Available Withdrawable Funds: <b>$3800</b>';
 
+  return finalResult;
+}
+
+function makeMessage(ctx) {
+  var finalResult;
+  finalResult = '👤User ID: ';
+  finalResult += ctx.from.id;
+  finalResult += '\n';
+  finalResult += '🎫 Account Name: ';
+  finalResult += ctx.session.moma;
+  finalResult += '\n';
+  finalResult += 'License Type: SIGMA';
+
+  return finalResult;
+}
 async function earn(ctx) {
   var finalResult;
   finalResult = 'Your Total Trading Profit: <b>$2101</b>';
@@ -512,6 +534,21 @@ async function stepCheck(ctx) {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
+     }
+    }
+
+async function stepCheck(ctx) {
+  //step check
+  if (ctx.session.step == 1) {
+    ctx.session.withdrawl = ctx.message.text;
+    ctx.session.step == 2
+      var keyboard = Markup.inlineKeyboard([Markup.callbackButton('✅Back✅', 'newJourney')], {
+        columns: 1,
+      });
+      ctx.telegram.sendMessage(
+        ctx.from.id,
+        'Back',
+        Extra.HTML().markup(keyboard)
      }
     }
 
@@ -662,10 +699,28 @@ bot.action('unlockct', (ctx) => {
       msg += '\n'
       msg += 'Please select the option'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Deposit to ANTBT', 'comingsoon'),
+    Markup.callbackButton('Deposit to ANTBT', 'deposit'),
     Markup.callbackButton('My Current ANTBT Balance', 'antbtbalance'),
     Markup.callbackButton('ANTBT Current Open Position', 'antbtop'),
     Markup.callbackButton('Stop ANTBT Copy-Trade', 'stopct'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
+    columns: 2,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('deposit', (ctx) => {
+  var msg = '🔥 Let’s make money! 🔥';
+      msg += '\n'
+      msg += '\n'
+      msg += 'Please select the option'
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('$300', 'deposit300'),
+    Markup.callbackButton('$500', 'deposit300'),
+    Markup.callbackButton('$1000', 'deposit300'),
+    Markup.callbackButton('$2500', 'deposit300'),
+    Markup.callbackButton('$5000', 'deposit300'),
+    Markup.callbackButton('$10000', 'deposit300'),
     Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
     columns: 2,
   });
@@ -706,9 +761,9 @@ bot.action('lock', (ctx) => {
       msg += '\n'
       msg += 'You must possess an ANTBT License to proceed'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Get Gamma License ', 'gamma'),
-    Markup.callbackButton('Get Delta License ', 'delta'),
     Markup.callbackButton('Get Sigma License ', 'sigma'),
+    Markup.callbackButton('Get Delta License ', 'delta'),
+    Markup.callbackButton('Get Gamma License ', 'gamma'),
     Markup.callbackButton('Get Alpha License ', 'alpha'),
     Markup.callbackButton('🔥 I will get the License Soon! 🔥', 'Journey'),], {
     columns: 2,
@@ -776,18 +831,22 @@ bot.action('gamma', (ctx) => {
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
-//deposit bnb 0.1
-bot.action('bnb01', (ctx) => {
-  var msg = 'Please send 0.1 BNB to the address below via the wallet you used to register here';
-      msg += '\n';
+//deposit 300
+bot.action('deposit300', (ctx) => {
+  var msg = 'Please send to AntBot ERC-20 wallet.';
       msg += '\n';
       msg += '0x6ed5ca050c106df566015ec59c14218941310c7c';
+      msg += '\n';
+      msg += '\n';
+      msg += 'Please type your TXID';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('✅Confirm', 'tx'),], {
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
+
+
 //deposit bnb 0.2
 bot.action('bnb02', (ctx) => {
   var msg = 'Please send 0.2 BNB to the address below via the wallet you used to register here';
@@ -1064,7 +1123,7 @@ bot.action('tx', (ctx) => {
 });
 
 bot.action('thanklicense', (ctx) => {
-   var msg = 'Thank you for purchasing Our License.';
+   var msg = 'Thank you for Deposit';
       msg += '\n'
       msg += '\n'
       msg += 'Please wait for our team to verify, which typically takes a maximum of 3x24 hours.'
@@ -1109,22 +1168,22 @@ bot.action('influencer', (ctx) => {
       msg += '\n'
       msg += '❌ Unavailable Copy Trade'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('Nebula✅', 'nebula'),
-    Markup.callbackButton('Nebula✅', 'nebula'),
-    Markup.callbackButton('Nebula✅', 'nebula'),
-    Markup.callbackButton('Nebula✅', 'nebula'),
-    Markup.callbackButton('Nebula❌', 'unavailable'),
-    Markup.callbackButton('Nebula❌', 'unavailable'),
-    Markup.callbackButton('Nebula❌', 'unavailable'),
-    Markup.callbackButton('Nebula❌', 'unavailable'),
-    Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'), ], {
+    Markup.callbackButton('HAPPY TRADER✅', 'happytrader'),
+    Markup.callbackButton('PriceAction2✅', 'priceact'),
+    Markup.callbackButton('MGrow❌', 'unavailable'),
+    Markup.callbackButton('ZA❌', 'unavailable'),
+    Markup.callbackButton('Copet Uang❌', 'unavailable'),
+    Markup.callbackButton('ROYAL FLUSH❌', 'unavailable'),
+    Markup.callbackButton('PrimeX✅', 'primex'),
+    Markup.callbackButton('AlphaPro❌', 'unavailable'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'), ], {
     columns: 2,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
   });
 
-bot.action('nebula', (ctx) => {
-  var msg = '🔥Here are upto date data from Nebula🔥';
+bot.action('happytrader', (ctx) => {
+  var msg = '🔥Here are upto date data from HAPPY TRADER🔥';
       msg += '\n';
       msg += '\n';
       msg += '<b>TF: 5 MINUTES</b>';
@@ -1156,19 +1215,178 @@ bot.action('nebula', (ctx) => {
       msg += '\n';
       msg += '12.00 BUY🟢';
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
     columns: 1,
   });
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 
 
+
+bot.action('primex', (ctx) => {
+  var msg = '🔥Here are upto date data from PriceActions2🔥';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊CRYPTO IDX';
+      msg += '\n';
+      msg += '08.00 BUY🟢';
+      msg += '\n';
+      msg += '09.00 BUY🟢';
+      msg += '\n';
+      msg += '10.00 SELL🔴';
+      msg += '\n';
+      msg += '11.00 BUY🟢';
+      msg += '\n';
+      msg += '12.00 BUY🟢';
+      msg += '\n';
+      msg += '13.00 SELL🔴';
+      msg += '\n';
+      msg += '14.00 BUY🟢';
+      msg += '\n';
+      msg += '15.00 BUY🟢';
+      msg += '\n';
+      msg += '16.00 SELL🔴';
+      msg += '\n';
+      msg += '17.00 BUY🟢';
+      msg += '\n';
+      msg += '18.00 SELL🔴';
+      msg += '\n';
+      msg += '19.00 BUY🟢';
+      msg += '\n';
+      msg += '20.00 BUY🟢';
+      msg += '\n';
+      msg += '21.00 SELL🔴';
+      msg += '\n';
+      msg += '22.00 BUY🟢';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊EUR USD';
+      msg += '\n';
+      msg += '08.00 SELL🔴';
+      msg += '\n';
+      msg += '09.00 BUY🟢';
+      msg += '\n';
+      msg += '10.00 SELL🔴';
+      msg += '\n';
+      msg += '11.00 BUY🟢';
+      msg += '\n';
+      msg += '12.00 BUY🟢';
+      msg += '\n';
+      msg += '13.00 SELL🔴';
+      msg += '\n';
+      msg += '14.00 BUY🟢';
+      msg += '\n';
+      msg += '15.00 SELL🔴';
+      msg += '\n';
+      msg += '16.00 BUY🟢';
+      msg += '\n';
+      msg += '17.00 BUY🟢';
+      msg += '\n';
+      msg += '18.00 SELL🔴';
+      msg += '\n';
+      msg += '19.00 SELL🔴';
+      msg += '\n';
+      msg += '20.00 SELL🔴';
+      msg += '\n';
+      msg += '21.00 BUY🟢';
+      msg += '\n';
+      msg += '22.00 BUY🟢';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('priceact', (ctx) => {
+  var msg = '🔥Here are upto date data from Primex🔥';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊CRYPTO IDX';
+      msg += '\n';
+      msg += '08.00 BUY🟢';
+      msg += '\n';
+      msg += '09.00 BUY🟢';
+      msg += '\n';
+      msg += '10.00 SELL🔴';
+      msg += '\n';
+      msg += '11.00 BUY🟢';
+      msg += '\n';
+      msg += '12.00 BUY🟢';
+      msg += '\n';
+      msg += '13.00 SELL🔴';
+      msg += '\n';
+      msg += '14.00 BUY🟢';
+      msg += '\n';
+      msg += '15.00 SELL🔴';
+      msg += '\n';
+      msg += '16.00 SELL🔴';
+      msg += '\n';
+      msg += '17.00 BUY🟢';
+      msg += '\n';
+      msg += '18.00 SELL🔴';
+      msg += '\n';
+      msg += '19.00 BUY🟢';
+      msg += '\n';
+      msg += '20.00 SELL🔴';
+      msg += '\n';
+      msg += '21.00 SELL🔴';
+      msg += '\n';
+      msg += '22.00 BUY🟢';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>TF: 5 MINUTES</b>';
+      msg += '\n';
+      msg += '📊EUR USD';
+      msg += '\n';
+      msg += '08.00 SELL🔴';
+      msg += '\n';
+      msg += '09.00 SELL🔴';
+      msg += '\n';
+      msg += '10.00 SELL🔴';
+      msg += '\n';
+      msg += '11.00 BUY🟢';
+      msg += '\n';
+      msg += '12.00 BUY🟢';
+      msg += '\n';
+      msg += '13.00 SELL🔴';
+      msg += '\n';
+      msg += '14.00 BUY🟢';
+      msg += '\n';
+      msg += '15.00 SELL🔴';
+      msg += '\n';
+      msg += '16.00 BUY🟢';
+      msg += '\n';
+      msg += '17.00 BUY🟢';
+      msg += '\n';
+      msg += '18.00 SELL🔴';
+      msg += '\n';
+      msg += '19.00 BUY🟢';
+      msg += '\n';
+      msg += '20.00 SELL🔴';
+      msg += '\n';
+      msg += '21.00 BUY🟢';
+      msg += '\n';
+      msg += '22.00 BUY🟢';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
   bot.action('unavailable', (ctx) => {
     var msg = '<b>This Influencers is currently UNAVAILABLE!</b>';
         msg += '\n'
         msg += '\n'
         msg += 'Please select the available Influencers✅'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1190,7 +1408,7 @@ bot.action('nebula', (ctx) => {
         msg += '<a href="https://t.me/AntBotAI_Official">Telegram Group</a>';
         msg += '\n'
         msg += '<a href="https://t.me/AntBotAI_Ann">Telegram Announcement</a>'
-    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'Journey'),], {
+    var keyboard = Markup.inlineKeyboard([ Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
       columns: 1,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
@@ -1235,6 +1453,11 @@ bot.action('moma', (ctx) => {
   ctx.reply('🤷‍♀️ What should I call you? Please input your name');
 });
 
+bot.action('withdrawl', (ctx) => {
+  ctx.session.step = 1;
+  ctx.reply('Type Amount that you want to Withdrawl. If you want to withdraw $100, please type 100');
+});
+
 bot.action('refresh', (ctx) => {
   //button click refresh data
   var msg = makeMessage(ctx);
@@ -1258,6 +1481,25 @@ bot.action('check', async (ctx) => {
   var msg = await check(ctx);
   var info = makeMessage(ctx);
   var keyboard = Markup.inlineKeyboard([Markup.callbackButton('🔥Confirm🔥', 'confirm')], {
+    columns: 1,
+  });
+  ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('unlockwd', async (ctx) => {
+  try {
+    let user = await ctx.getChatMember(ctx.from.id, '');
+    if (user && !user.is_bot) {
+      ctx.session.joinTele = '1';
+    }
+  } catch (e) {
+    console.log(e);
+  }
+  var msg = await wd(ctx);
+  var info = makeMessage(ctx);
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('I want to Withdrawl Now', 'withdrawl'),
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney')], {
     columns: 1,
   });
   ctx.telegram.sendMessage(ctx.from.id, info + '\n \n' + msg, Extra.HTML().markup(keyboard));
