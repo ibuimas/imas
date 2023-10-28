@@ -378,20 +378,22 @@ async function op(ctx) {
   var finalResult;
   finalResult = 'ANTBT Current Position:';
   finalResult += '\n';
-  finalResult += 'EURUSD';
+  finalResult += 'SOL/USD SELL';
   finalResult += '\n';
-  finalResult += '🔴19.4';
+  finalResult += 'OP: 32.18';
   finalResult += '\n';
-  finalResult += '🟢17.6';
+  finalResult += 'TP: 31.00';
   finalResult += '\n';
-  finalResult += '🟢20.7';
+  finalResult += 'SL: 33.14';
   finalResult += '\n';
   finalResult += '\n';
-  finalResult += 'JPYUSD';
+  finalResult += 'ETH/USD BUY';
   finalResult += '\n';
-  finalResult += '🟢9.5';
+  finalResult += 'OP: 1790.1';
   finalResult += '\n';
-  finalResult += '🔴15.3';
+  finalResult += 'TP: 1799';
+  finalResult += '\n';
+  finalResult += 'SL: 1763.2';
 
   return finalResult;
 }
@@ -1187,21 +1189,65 @@ bot.action('influencer', (ctx) => {
       msg += '\n'
       msg += '❌ Unavailable Copy Trade'
   var keyboard = Markup.inlineKeyboard([
-    Markup.callbackButton('HAPPY TRADER✅', 'happytrader'),
-    Markup.callbackButton('PriceAction2✅', 'priceact'),
-    Markup.callbackButton('MGrow❌', 'unavailable'),
-    Markup.callbackButton('ZA❌', 'unavailable'),
-    Markup.callbackButton('Copet Uang❌', 'unavailable'),
-    Markup.callbackButton('ROYAL FLUSH❌', 'unavailable'),
-    Markup.callbackButton('PrimeX✅', 'primex'),
-    Markup.callbackButton('AlphaPro❌', 'unavailable'),
+    Markup.callbackButton('Andromeda✅', 'andromeda'),
+    Markup.callbackButton('Whirlpool✅', 'whirlpool'),
+    Markup.callbackButton('Triangulum❌', 'unavailable'),
+    Markup.callbackButton('Pinwheel✅', 'pinwheel'),
+    Markup.callbackButton('Sombrero❌', 'unavailable'),
+    Markup.callbackButton('Milky Way❌', 'unavailable'),
+    Markup.callbackButton('Catwheel✅', 'catwheel'),
+    Markup.callbackButton('Black Eye❌', 'unavailable'),
     Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'), ], {
     columns: 2,
     });
     ctx.reply(msg, Extra.HTML().markup(keyboard));
   });
 
-bot.action('happytrader', (ctx) => {
+bot.action('pinwheel', (ctx) => {
+  var msg = '🔥Here are upto date data from ZA🔥';
+      msg += '\n';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>BTC/USD SELL🔴</b>';
+      msg += '\n';
+      msg += 'OP: 34654';
+      msg += '\n';
+      msg += '\n';
+      msg += 'TP1: 34496';
+      msg += '\n';
+      msg += 'TP2: 34035';
+      msg += '\n';
+      msg += 'TP3: 33689';
+      msg += '\n';
+      msg += '\n';
+      msg += 'SL1: 34857';
+      msg += '\n';
+      msg += 'SL2: 35198';
+      msg += '\n';
+      msg += '\n';
+      msg += '<b>ETH/USD BUY🟢</b>';
+      msg += '\n';
+      msg += 'OP: 1791.4';
+      msg += '\n';
+      msg += '\n';
+      msg += 'TP1: 1795';
+      msg += '\n';
+      msg += 'TP2: 1787.9';
+      msg += '\n';
+      msg += 'TP3: 1770.8';
+      msg += '\n';
+      msg += '\n';
+      msg += 'SL1: 1846.4';
+      msg += '\n';
+      msg += 'SL2: 1865.5';
+  var keyboard = Markup.inlineKeyboard([
+    Markup.callbackButton('🔥Back to Home Menu🔥', 'newJourney'),], {
+    columns: 1,
+  });
+  ctx.reply(msg, Extra.HTML().markup(keyboard));
+});
+
+bot.action('andromeda', (ctx) => {
   var msg = '🔥Here are upto date data from HAPPY TRADER🔥';
       msg += '\n';
       msg += '\n';
@@ -1242,8 +1288,8 @@ bot.action('happytrader', (ctx) => {
 
 
 
-bot.action('primex', (ctx) => {
-  var msg = '🔥Here are upto date data from PriceActions2🔥';
+bot.action('whirlpool', (ctx) => {
+  var msg = '🔥Here are upto date data from Whirpool🔥';
       msg += '\n';
       msg += '\n';
       msg += '<b>TF: 5 MINUTES</b>';
@@ -1321,8 +1367,8 @@ bot.action('primex', (ctx) => {
   ctx.reply(msg, Extra.HTML().markup(keyboard));
 });
 
-bot.action('priceact', (ctx) => {
-  var msg = '🔥Here are upto date data from Primex🔥';
+bot.action('catwheel', (ctx) => {
+  var msg = '🔥Here are upto date data from Catwheel🔥';
       msg += '\n';
       msg += '\n';
       msg += '<b>TF: 5 MINUTES</b>';
